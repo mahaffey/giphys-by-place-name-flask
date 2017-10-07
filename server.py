@@ -58,7 +58,7 @@ def curl_json_submition(request):
         return get_many_places(query)
 
 # method to hit google places api
-def search_google_places(query):
+def fetch_google_places_api(query):
     api_key = 'AIzaSyDoH3nXDk5CGtBpgjkmuvcCJ1U2EfEixw8'
     url = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query={0}&key={1}'.format(query, api_key)
 
@@ -68,7 +68,7 @@ def search_google_places(query):
         return data
 
 def get_one_place(query):
-    data = search_google_places(query)
+    data = fetch_google_places_api(query)
     to_json = json.loads(data)
     # create random number to select a place from places search result
     # make sure we can't go over the index size by using len
@@ -80,10 +80,17 @@ def get_one_place(query):
     # pretty_json = json.dumps(to_json, sort_keys=True, indent=4)
     # print(pretty_json)
 
+    name = place['name']
+    name_no_spaces = '+'.join(name.split())
+
+    giphy_data = json.loads(fetch_giphy(name_no_spaces))
+
+    place['giphy'] = giphy_data
+
     return jsonify(place)
 
 def get_many_places(query):
-    data = search_google_places(query)
+    data = fetch_google_places_api(query)
     to_json = json.loads(data)
     places = to_json['results']
 
@@ -93,9 +100,14 @@ def get_many_places(query):
 
     return jsonify(places)
 
-def get_giphy(query):
+def fetch_giphy(query):
     api_key = 'qOMNTU8uPW8fGbZlT7L1Ueu9hzXLb6QD'
-    url = 'http://api.giphy.com/v1/gifs/search?q={0}&limit=3&api_key={1}'.format(query, api_key)
+    url = 'http://api.giphy.com/v1/gifs/search?q={0}&limit=1&api_key={1}'.format(query, api_key)
+
+    # fetches with this url and sets response as response
+    with urllib.request.urlopen(url) as response:
+        data = response.read()
+        return data
 
 if __name__ == '__main__':
     app.debug = True
