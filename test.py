@@ -20,6 +20,7 @@ def home_page():
 def form_posting():
     # check to see if request is coming from HTML form or cURL
     if request.form['query']: # HTML form
+        print('hmm')
         return web_page_form_submition(request)
 
     elif request.data: # cURL JSON
