@@ -1,6 +1,9 @@
 # giphys-by-place-name-flask
 Code Challenge using Python and Flask to find related gifs when searching for place names
 
+## Disclaimer
+Yes I left my API keys intact in the file... This is for easy code review/start up, they will be deactivated after some time.
+
 ### Built with:
 1. Python 3
 2. Flask
