@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, jsonify
 from helpers.server_helpers.get_places import get_places
+import json
 
 # initialize app variable using the __name__ attribute
 app = Flask(__name__)
@@ -41,7 +42,10 @@ def cURL_json_submition(request):
     # get search request type ('one' or 'many')
     request_type = json_data['type']
 
-    return get_places(query, request_type)
+    if request_type == 'one' or request_type == 'many':
+        return get_places(query, request_type)
+    else:
+        return '\n\nERROR: The "type" attribute in your JSON POST request may only be either "one" or "many". Please try again.\n\n\n'
 
 # starts dev server if on path
 if __name__ == '__main__':
