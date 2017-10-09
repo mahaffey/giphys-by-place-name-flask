@@ -3,9 +3,9 @@ Code Challenge using Python and Flask to find related gifs when searching for pl
 
 ### Built with:
 1. Python
-* Flask
-* GooglePlaces api
-* Giphy api
+2. Flask
+3. GooglePlaces api
+4. Giphy api
 
 
 ### File Structure
