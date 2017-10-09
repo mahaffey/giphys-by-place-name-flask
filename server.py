@@ -39,9 +39,10 @@ def cURL_json_submition(request):
     json_data = json.loads(request.data.decode('utf-8'))
     # set query from JSON data
     query = json_data['query']
-    # get search request type ('one' or 'many')
+    # get search request type (should be 'one' or 'many')
     request_type = json_data['type']
 
+    # throw user an error if request type is not either 'one' or 'many'
     if request_type == 'one' or request_type == 'many':
         return get_places(query, request_type)
     else:
